@@ -21,7 +21,7 @@ import ScrollTop from './ScrollTop'
 import CenteredLayout from './CenteredLayout'
 
 const IS_CLIENT = typeof document !== 'undefined'
-const req = require.context(DIRNAME, true, /\.(js|md|mdx|jsx)$/)
+const req = require.context(DIRNAME, true, /^((?![\\/]node_modules[\\/]).)*\.(js|md|mdx|jsx)$/)
 
 const { filename, basename = '', disableScroll } = OPTIONS
 
