@@ -29,6 +29,7 @@ const cli = meow(`
 
       --webpack       Path to webpack config file
       --match         String to match routes against using minimatch
+      --custom-app    Path to custom app file
 
     ${chalk.gray('Dev Server')}
 
@@ -72,6 +73,9 @@ const cli = meow(`
       type: 'string',
       alias: 'c'
     },
+    customApp: {
+      type: 'string'
+    },
     match: {
       type: 'string'
     },
@@ -110,6 +114,7 @@ const opts = Object.assign({
 }, config, cli.flags)
 
 opts.outDir = path.resolve(opts.outDir)
+if (opts.customApp) opts.customApp = path.resolve(opts.customApp)
 if (opts.config) opts.config = path.resolve(opts.config)
 if (opts.webpack) {
   opts.webpack = require(path.resolve(opts.webpack))

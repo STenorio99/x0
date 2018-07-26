@@ -21,7 +21,7 @@ import ScrollTop from './ScrollTop'
 import CenteredLayout from './CenteredLayout'
 
 const IS_CLIENT = typeof document !== 'undefined'
-const req = require.context(DIRNAME, true, /\.(js|md|mdx|jsx)$/)
+const req = require.context(DIRNAME, true, /^((?![\\/]node_modules[\\/]).)*\.(js|md|mdx|jsx)$/)
 
 const { filename, basename = '', disableScroll } = OPTIONS
 
@@ -43,7 +43,9 @@ const DefaultApp = props => props.children
 
 const Router = IS_CLIENT ? BrowserRouter : StaticRouter
 const appPath = req.keys().find(key => key === './_app.js')
-const App = appPath ? (req(appPath).default || req(appPath)) : DefaultApp
+const App = CUSTOM_APP 
+  ? (require(CUSTOM_APP).default || require(CUSTOM_APP)) 
+  : appPath ? (req(appPath).default || req(appPath)) : DefaultApp
 
 export const getRoutes = async (components = initialComponents) => {
   const promises = await components.map(async ({
