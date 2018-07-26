@@ -58,23 +58,25 @@ export default ({
 }) => (
   <Box mb={4}>
     <ScopeConsumer defaultScope={scope}>
-      {scope => (
-        <LiveProvider
-          code={code}
-          scope={scope}
-          mountStylesheet={false}
-          transformCode={mdx ? transformMdx : transformCode}>
-          {typeof render === 'function' ? (
-            render({ code, scope })
-          ) : (
-            <React.Fragment>
-              <Preview />
-              <Editor />
-              <Err />
-            </React.Fragment>
-          )}
-        </LiveProvider>
-      )}
+      {newScope => {
+        scope = {...scope, ...newScope};
+        return ( 
+          <LiveProvider
+            code={code}
+            scope={scope}
+            mountStylesheet={false}
+            transformCode={mdx ? transformMdx : transformCode}>
+            {typeof render === 'function' ? (
+              render({ code, scope })
+            ) : (
+              <React.Fragment>
+                <Preview />
+                <Editor />
+                <Err />
+              </React.Fragment>
+            )}
+          </LiveProvider>
+      )}}
     </ScopeConsumer>
   </Box>
 )
